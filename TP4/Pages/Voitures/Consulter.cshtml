@@ -1,0 +1,43 @@
+﻿@page
+@model TP4.Pages.Voitures.ConsulterModel
+@{
+    ViewData["Titre"] = "Gestion des Voitures - Détails de la Voiture";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row mb-3">
+               <dt class="col-sm-2">Identifiant</dt>
+               <dd class="col-sm-10">@Model.Voiture.Id</dd>
+
+               <dt class="col-sm-2">Marque</dt>
+               <dd class="col-sm-10">@Model.Voiture.Marque</dd>
+
+               <dt class="col-sm-2">Prix Journalier</dt>
+               <dd class="col-sm-10">@Model.Voiture.PrixJournalier $</dd>
+
+               <dt class="col-sm-2">Description</dt>
+               <dd class="col-sm-10">@Model.Voiture.Description</dd>
+
+               <dt class="col-sm-2">Année de Fabrication</dt>
+               <dd class="col-sm-10">@Model.Voiture.AnneeFabrication</dd>
+             </dl>
+           </div>
+          </div>
+
+    <div class="mt-3">
+        <a asp-page="./Modifier" asp-route-id="@Model.Voiture.Id" class="btn btn-primary">Modifier</a>
+            @if (Model.VerifierReservation(Model.Voiture))
+            {
+                <a class="btn btn-secondary" disabled>Supprimer</a>
+            }
+            else
+            {
+                <a asp-page="Supprimer" asp-route-id="@Model.Voiture.Id" class="btn btn-danger">Supprimer</a>
+            }
+        <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+    </div>
+</div>

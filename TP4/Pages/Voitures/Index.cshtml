@@ -1,0 +1,58 @@
+﻿@page
+@model TP4.Pages.Voitures.IndexModel
+@{
+    ViewData["Titre"] = "Gestion des Voitures - Accueil";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+    @if (Model.Voitures.Count <= 0)
+    {
+            <div class="alert alert-primary" role="alert">
+                Aucune voiture n'est enregistrée.
+            </div>
+    }
+    else
+    {
+        <table class="table table-hover">
+                <thead>
+                    <tr>
+                       <th scope="col">Identifiant</th>
+                       <th scope="col">Description</th>
+                       <th scope="col">Marque</th>
+                       <th scope="col">Prix Journalier</th>
+                       <th scope="col">Année de Fabrication</th>
+                       <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var voiture in Model.Voitures)
+                {
+                            <tr>
+                                <td>@voiture.Id</td>
+                                <td>@Model.ReduireDescription(voiture)</td>
+                                <td>@voiture.Marque</td>
+                                <td>@voiture.PrixJournalier $</td>
+                                <td>@voiture.AnneeFabrication</td>
+                                <td>
+                                    <a asp-page="Modifier" asp-route-id="@voiture.Id" class="btn btn-primary btn-sm">Modifier</a>
+                            @if (Model.VerifierReservation(voiture))
+                            {
+                                <a class="btn btn-secondary btn-sm" disabled>Supprimer</a>
+                            }
+                            else
+                            {
+                                <a asp-page="Supprimer" asp-route-id="@voiture.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                            }
+                                    <a asp-page="Consulter" asp-route-id="@voiture.Id" class="btn btn-primary btn-sm">Détails</a>
+                                </td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+    <a asp-page="Ajouter" class="btn btn-primary">Ajouter une nouvelle voiture</a>
+    <a asp-page="../Index" class="btn btn-outline-dark">Retourner à l'accueil</a>
+
+</div>

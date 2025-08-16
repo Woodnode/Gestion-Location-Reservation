@@ -1,0 +1,34 @@
+﻿@page
+@model TP4.Pages.Chambres.AjouterModel
+@{
+    ViewData["Titre"] = "Gestion des Chambres - Ajouter une Chambre";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Chambre.Description" class="control-label"></label>
+            <input type="text" asp-for="Chambre.Description" class="form-control">
+            <span asp-validation-for="Chambre.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Chambre.PrixJournalier" class="control-label">Prix Journalier</label>
+            <input type="number" asp-for="Chambre.PrixJournalier" class="form-control">
+            <span asp-validation-for="Chambre.PrixJournalier" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+            <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+        </div>
+    </form>
+</div>

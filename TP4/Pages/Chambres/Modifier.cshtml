@@ -1,0 +1,46 @@
+﻿@page
+@model TP4.Pages.Chambres.ModifierModel
+@{
+    ViewData["Titre"] = "Gestion des Chambres - Modifier";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+    <div class="container mt-5">
+        <h5 class="mb-3">Veuillez saisir les nouveaux renseignements pour la Chambre</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input asp-for="Chambre.Id" value="@Model.Chambre.Id" type="hidden" />
+                    <div class="row mb-3">
+                        <label asp-for="Chambre.Description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" value="@Model.Chambre.Description" asp-for="Chambre.Description" class="form-control" />
+                            <span asp-validation-for="Chambre.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="Chambre.PrixJournalier" class="col-sm-2 col-form-label">Prix Journalier</label>
+                        <div class="col-sm-10">
+                            <input type="number" value="@Model.Chambre.PrixJournalier" asp-for="Chambre.PrixJournalier" class="form-control" />
+                            <span asp-validation-for="Chambre.PrixJournalier" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="mt-3">
+            <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+        </div>
+    </div>
+</div>

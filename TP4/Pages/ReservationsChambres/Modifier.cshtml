@@ -1,0 +1,60 @@
+﻿@page
+@model TP4.Pages.ReservationsChambres.ModifierModel
+@{
+    ViewData["Titre"] = "Gestion des Réservations - Modifier une Réservation";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+        @if (Model.Reservation.DateDebut <= DateTime.Now)
+    {
+        <h1>Impossible de modifier une réservation en cours ou passée.</h1>
+        <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+    }
+    else
+    {
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Reservation.Id" class="control-label font-weight-bold">Numéro d'Identification de la Réservation</label>
+            <input asp-for="Reservation.Id" class="form-control" readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Reservation.DateDebut" class="control-label font-weight-bold">Date de Début</label>
+            <input type="date" asp-for="Reservation.DateDebut" class="form-control" />
+            <span asp-validation-for="Reservation.DateDebut" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Reservation.DateFin" class="control-label font-weight-bold">Date de Fin</label>
+            <input type="date" asp-for="Reservation.DateFin" class="form-control" />
+            <span asp-validation-for="Reservation.DateFin" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="IdChambre" class="control-label font-weight-bold">Chambre</label>
+            <select asp-for="IdChambre" class="form-control select-arrow">
+                <option value="">-- Sélectionnez une chambre --</option>
+                @foreach (var chambre in Model.ListeDeChambres)
+                {
+                    <option value="@chambre.Id">Description: @chambre.Description | @chambre.PrixJournalier$ par jour.</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+        </div>
+    </form>
+    }
+</div>

@@ -1,0 +1,72 @@
+﻿@page
+@model TP4.Pages.ReservationsChambres.IndexModel
+@{
+    ViewData["Titre"] = "Gestion des Réservations de Chambres - Index";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+<form method="get">
+        <div class="form-group mt-5 mb-2">
+            <label for="tri" class="control-label font-weight-bold">Critère de tri : </label>
+            <select class="mx-2" id="tri" name="tri">
+                <option value="DateDebut">Date de Début</option>
+                <option value="DateFin">Date de Fin</option>
+                <option value="Prix">Prix Total</option>
+            </select>
+            <button type="submit" class="btn btn-outline-dark btn-sm">Trier</button>
+        </div>
+        
+</form>
+
+    @if (Model.Reservations.Count <= 0)
+    {
+        <div class="alert alert-primary" role="alert">
+            Aucune réservation n'est enregistrée.
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Identifiant</th>
+                    <th scope="col">Identifiant Chambre</th>
+                    <th scope="col">Date de Début</th>
+                    <th scope="col">Date de Fin</th>
+                    <th scope="col">Prix Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model.Reservations)
+                {
+                    <tr>
+                        <td>@reservation.Id</td>
+                        <td>@reservation.ObjetDeLaReservation.Id</td>
+                        <td>@reservation.DateDebut.ToString("yyyy-MM-dd")</td>
+                        <td>@reservation.DateFin.ToString("yyyy-MM-dd")</td>
+                        <td>@reservation.Prix $</td>
+                        <td>
+                            @if (reservation.DateDebut >= DateTime.Now)
+                            {
+                                <a asp-page="Modifier" asp-route-id="@reservation.Id" class="btn btn-primary btn-sm">Modifier</a>
+                                <a asp-page="Supprimer" asp-route-id="@reservation.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-secondary btn-sm" disabled>Modifier</a>
+                                <a class="btn btn-secondary btn-sm" disabled>Supprimer</a>
+                            }
+                            <a asp-page="Consulter" asp-route-id="@reservation.Id" class="btn btn-primary btn-sm">Détails</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <a asp-page="Ajouter" class="btn btn-primary">Nouvelle réservation</a>
+    <a asp-page="../Index" class="btn btn-outline-dark">Retourner à l'accueil</a>
+</div>

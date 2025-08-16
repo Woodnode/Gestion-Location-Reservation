@@ -1,0 +1,35 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center display-4 mb-4">Accueil</h1>
+    <h2 class="text-center display-4 mb-4">Bienvenue dans le système de gestion</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-car fa-5x mb-3"></i>
+                    <h3 class="card-title">Gestion des Voitures</h3>
+                    <p class="card-text">Accédez aux outils de gestion pour gérer les voitures et leurs réservations.</p>
+                    <a href="/Voitures" class="btn btn-primary mb-2">Gérer les voitures</a>
+                    <a href="/ReservationsVoitures" class="btn btn-primary mb-2">Gérer les réservations de voitures</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-hotel fa-5x mb-3"></i>
+                    <h3 class="card-title">Gestion des Chambres</h3>
+                    <p class="card-text">Accédez aux outils de gestion pour gérer les chambres et leurs réservations.</p>
+                    <a href="/Chambres" class="btn btn-primary mb-2">Gérer les chambres</a>
+                    <a href="/ReservationsChambres" class="btn btn-primary mb-2">Gérer les réservations de chambres</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@page
+@model TP4.Pages.ReservationsChambres.ConsulterModel
+@{
+    ViewData["Titre"] = "Gestion des Réservations - Détails de la Réservation";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row mb-3">
+                <dt class="col-sm-4">Identifiant de la Réservation</dt>
+                <dd class="col-sm-8">@Model.Reservation.Id</dd>
+
+    <div class="card my-3 bg-light">
+        <div class="card-body">
+            <dl class="row mb-3">
+                <dt class="col-sm-4">Identifiant Chambre</dt>
+                            <dd class="col-sm-8">@Model.Chambre.Id</dd>
+
+                <dt class="col-sm-4">Prix Journalier de location de la Chambre</dt>
+                            <dd class="col-sm-8">@Model.Chambre.PrixJournalier $</dd>
+
+                            <dt class="col-sm-4">Description de la Chambre</dt>
+                            <dd class="col-sm-8">@Model.Chambre.Description</dd>
+
+            </dl>
+        </div>
+    </div>
+
+                <dt class="col-sm-4">Date de Début de Réservation</dt>
+                <dd class="col-sm-8">@Model.Reservation.DateDebut.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-4">Date de Fin de Réservation</dt>
+                <dd class="col-sm-8">@Model.Reservation.DateFin.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-4">Prix de la Réservation</dt>
+                <dd class="col-sm-8">@Model.Reservation.Prix $</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        @if (@Model.Reservation.DateDebut >= DateTime.Now)
+        {
+            <a asp-page="Modifier" asp-route-id="@Model.Reservation.Id" class="btn btn-primary">Modifier</a>
+            <a asp-page="Supprimer" asp-route-id="@Model.Reservation.Id" class="btn btn-danger">Supprimer</a>
+        }
+        else
+        {
+            <a class="btn btn-secondary " disabled>Modifier</a>
+            <a class="btn btn-secondary " disabled>Supprimer</a>
+        }
+        <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+    </div>
+</div>

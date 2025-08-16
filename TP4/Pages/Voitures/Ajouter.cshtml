@@ -1,0 +1,55 @@
+﻿@page
+@model TP4.Pages.Voitures.AjouterModel
+@{
+    ViewData["Titre"] = "Gestion des Voitures - Ajouter une Voiture";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+    <div class="container mt-5">
+        <h1 class="mb-4">@ViewData["Titre"]</h1>
+
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+               <label asp-for="Voiture.Marque" class="control-label font-weight-bold"></label>
+               <select asp-for="Voiture.Marque" class="form-control">
+               <option value="">-- Sélectionnez une marque --</option>
+                    @foreach (var marque in Model.ListeDeMarques)
+                    {
+                <option value="@marque">@marque</option>
+                    }
+    </select>
+                <span asp-validation-for="Voiture.Marque" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Voiture.PrixJournalier" class="control-label font-weight-bold">Prix Journalier</label>
+                <input type="number" asp-for="Voiture.PrixJournalier" class="form-control" />
+                <span asp-validation-for="Voiture.PrixJournalier" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Voiture.Description" class="control-label font-weight-bold"></label>
+                <input type="text" asp-for="Voiture.Description" class="form-control" />
+                <span asp-validation-for="Voiture.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Voiture.AnneeFabrication" class="control-label font-weight-bold">Année de Fabrication</label>
+                <input type="number" asp-for="Voiture.AnneeFabrication" class="form-control" />
+                <span asp-validation-for="Voiture.AnneeFabrication" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <a asp-page="./Index" class="btn btn-outline-dark">Retourner à la liste</a>
+            </div>
+        </form>
+    </div>
+
