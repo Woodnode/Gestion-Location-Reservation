@@ -18,3 +18,4 @@
 18;Suite familiale;118
 19;Chambre double;89
 20;Chambre simple;64
+21;Suite familiale;125

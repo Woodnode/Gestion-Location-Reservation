@@ -29,3 +29,4 @@
 29;Hyundai;85;i20 Noir 49000km;2015
 30;Honda;100;Insight Bleu 34000km;2021
 31;Ford;250;Mondeo Vert;2019
+32;Mazda;200;CX-5 Orange;2020
