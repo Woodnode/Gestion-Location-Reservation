@@ -90,22 +90,45 @@ namespace TP4.Services
 
                     foreach (var ligne in lignes)
                     {
+                        if (string.IsNullOrWhiteSpace(ligne)) continue;
+                        
                         var champs = ligne.Split(';');
                         var reservable = Activator.CreateInstance(type.Value) ?? throw new InvalidOperationException("Erreur lors de la création de l'objet reservable");
                         PropertyInfo[] props = reservable.GetType().GetProperties();
 
-                        for (int i = 0; i < props.Length; i++)
+                        try
                         {
-                            if (props[i].PropertyType == typeof(int)) props[i].SetValue(reservable, int.Parse(champs[i]));
-                            else if (props[i].PropertyType == typeof(string)) props[i].SetValue(reservable, champs[i]);
-                            else if (props[i].PropertyType == typeof(DateTime)) props[i].SetValue(reservable, DateTime.Parse(champs[i]));
-                            else if (props[i].Name == "ObjetDeLaReservation")
+                            for (int i = 0; i < props.Length && i < champs.Length; i++)
                             {
-                                IReservable? objetDeLaReservation = ObtenirReservableParId(champs[i], int.Parse(champs[i + 1]));
-                                props[i].SetValue(reservable, objetDeLaReservation);
-                                props[i + 1].SetValue(reservable, int.Parse(champs[i + 2]));
-                                i += 2;
+                                if (props[i].PropertyType == typeof(int)) 
+                                {
+                                    if (int.TryParse(champs[i], out int intValue))
+                                        props[i].SetValue(reservable, intValue);
+                                }
+                                else if (props[i].PropertyType == typeof(string)) 
+                                    props[i].SetValue(reservable, champs[i]);
+                                else if (props[i].PropertyType == typeof(DateTime)) 
+                                {
+                                    if (DateTime.TryParse(champs[i], out DateTime dateValue))
+                                        props[i].SetValue(reservable, dateValue);
+                                }
+                                else if (props[i].Name == "ObjetDeLaReservation")
+                                {
+                                    if (i + 2 < champs.Length)
+                                    {
+                                        IReservable? objetDeLaReservation = ObtenirReservableParId(champs[i], int.Parse(champs[i + 1]));
+                                        props[i].SetValue(reservable, objetDeLaReservation);
+                                        props[i + 1].SetValue(reservable, int.Parse(champs[i + 2]));
+                                        i += 2;
+                                    }
+                                }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Ignorer les lignes avec des erreurs de format
+                            Console.WriteLine($"Erreur lors du traitement de la ligne: {ligne}. Erreur: {ex.Message}");
+                            continue;
                         }
 
                         if (type.Key == "Voiture") ListeVoitures.Add((Voiture)reservable);
